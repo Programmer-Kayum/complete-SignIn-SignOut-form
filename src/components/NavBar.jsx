@@ -28,10 +28,12 @@ function NavBar() {
 
   return (
     <nav className="bg-gray-800 text-white">
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
+      <div className="container mx-auto flex justify-around items-center py-4 pl-6">
         {/* Logo */}
         <div className="text-2xl font-bold">
-          <NavLink to="/">MyLogo</NavLink>
+          <NavLink to="/">
+            K<span className="text-orange-500">R</span>
+          </NavLink>
         </div>
 
         {/* Hamburger Icon */}
@@ -59,7 +61,7 @@ function NavBar() {
 
         {/* Nav Links */}
         <div
-          className={`lg:flex lg:items-center lg:space-x-6 ${
+          className={`lg:flex lg:justify-end lg:space-x-6 ${
             isOpen ? "block" : "hidden"
           }`}
         >
@@ -82,6 +84,16 @@ function NavBar() {
             }
           >
             About
+          </NavLink>
+          <NavLink
+            to="/courses"
+            className={({ isActive }) =>
+              `block mt-4 lg:mt-0 text-gray-200 hover:text-white ${
+                isActive ? "text-blue-400" : ""
+              }`
+            }
+          >
+            Courses
           </NavLink>
           <NavLink
             to="/services"

@@ -5,7 +5,7 @@ import ProfileAnimation from "./ProfileAnimation";
 
 const Root = () => {
   return (
-    <div className="w-4/5 mx-auto">
+    <div className="lg:w-4/5 mx-auto">
       <NavBar></NavBar>
       <Outlet></Outlet>
       <ProfileAnimation></ProfileAnimation>

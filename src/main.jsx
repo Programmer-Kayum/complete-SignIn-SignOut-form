@@ -14,6 +14,7 @@ import Contact from "./components/Contact.jsx";
 import AuthProvider from "./components/AuthProvider.jsx";
 import PrivateRoute from "./Routes/PrivateRoute.jsx";
 import UserProfile from "./components/UserProfile.jsx";
+import Courses from "./components/Courses.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,15 +44,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/contact",
-        element: (
-          <PrivateRoute>
-            <Contact></Contact>
-          </PrivateRoute>
-        ),
+        element: <Contact></Contact>,
       },
       {
         path: "/profile",
         element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "/courses",
+        element: (
+          <PrivateRoute>
+            <Courses></Courses>
+          </PrivateRoute>
+        ),
       },
     ],
   },
