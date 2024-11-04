@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../FireBase/firebase.config";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { useContext, useState } from "react";
+import { AuthContext } from "./AuthProvider";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate(); // Get the navigate function
+  const { logOut, user } = useContext(AuthContext);
+  console.log(user);
 
   const handleLogOut = () => {
-    signOut(auth)
+    logOut()
       .then(() => {
         toast("Sign-out successful.");
         // Sign-out successful.
@@ -101,29 +103,33 @@ function NavBar() {
           >
             Contact
           </NavLink>
-          <NavLink
-            to="/signIn"
-            className={({ isActive }) =>
-              `block mt-4 lg:mt-0 text-gray-200 hover:text-white ${
-                isActive ? "text-blue-400" : ""
-              }`
-            }
-          >
-            SignIn
-          </NavLink>
-          <NavLink
-            to="/reg"
-            className={({ isActive }) =>
-              `block mt-4 lg:mt-0 text-gray-200 hover:text-white ${
-                isActive ? "text-blue-400" : ""
-              }`
-            }
-          >
-            Register
-          </NavLink>
+          {!user && (
+            <>
+              <NavLink
+                to="/signIn"
+                className={({ isActive }) =>
+                  `block mt-4 lg:mt-0 text-gray-200 hover:text-white ${
+                    isActive ? "text-blue-400" : ""
+                  }`
+                }
+              >
+                SignIn
+              </NavLink>
+              <NavLink
+                to="/reg"
+                className={({ isActive }) =>
+                  `block mt-4 lg:mt-0 text-gray-200 hover:text-white ${
+                    isActive ? "text-blue-400" : ""
+                  }`
+                }
+              >
+                Register
+              </NavLink>
+            </>
+          )}
         </div>
 
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end ">
           <div
             tabIndex={0}
             role="button"
@@ -131,8 +137,9 @@ function NavBar() {
           >
             <div className="w-10 rounded-full">
               <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={user?.photoURL || "https://via.placeholder.com/100"}
+                alt="User Avatar"
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
@@ -141,10 +148,18 @@ function NavBar() {
             className="menu menu-sm dropdown-content bg-black rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
+              {user && (
+                <Link to={"/profile"} className="justify-between">
+                  Profile{" "}
+                </Link>
+              )}
+            </li>
+            <li>
+              {!user && (
+                <Link to={"/reg"}>
+                  <span className="badge">New</span>
+                </Link>
+              )}
             </li>
             <li>
               <a>Settings</a>
