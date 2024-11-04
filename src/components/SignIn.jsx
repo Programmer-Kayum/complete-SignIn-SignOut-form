@@ -4,14 +4,16 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../FireBase/firebase.config";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "./AuthProvider";
 
 function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { signInUser } = useContext(AuthContext);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -26,7 +28,7 @@ function SignIn() {
     const email = target.email.value;
     const password = target.password.value;
 
-    signInWithEmailAndPassword(auth, email, password)
+    signInUser(email, password)
       .then((result) => {
         console.log(result.user);
 

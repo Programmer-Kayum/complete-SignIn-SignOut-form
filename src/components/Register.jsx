@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "../FireBase/firebase.config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { AuthContext } from "./AuthProvider";
 
 function Register() {
+  const { createUser } = useContext(AuthContext);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
@@ -33,7 +36,7 @@ function Register() {
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
+    createUser(email, password)
       .then((result) => {
         const user = result.user;
         // console.log(user);
